@@ -1,10 +1,10 @@
 {
     "port": 5000,
     "mongodb": {
-        "address": "62.210.82.4",
+        "address": "",
         "port": "27017",
         "name": "resu-me",
-        "user": "blazkowicz",
-        "password": "marley66"
+        "user": "",
+        "password": ""
     }
 }
