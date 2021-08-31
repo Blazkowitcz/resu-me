@@ -4,9 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./config.json');
 const app = express();
-const InitiateMongoServer = require('./app/modules/database.module');
-
-InitiateMongoServer();
+const user = require('./app/routes/user.route');
 
 /**
  * Express configuration
@@ -16,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static('public'));
+
+app.use('/user', user);
 
 /**
  * Check if server is started
