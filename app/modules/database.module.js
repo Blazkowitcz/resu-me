@@ -1,25 +1,37 @@
-const mongoose = require('mongoose');
+const mysql = require('mysql');
 const config = require('../../config.json');
+const db = mysql.createConnection({
+    host: config.database.host,
+    user: config.database.user,
+    password: config.database.password,
+    database: config.database.database_name
+});
 
-const mongo_uri = "mongodb://" + config.mongodb.address + ':' + config.mongodb.port + '/' + config.mongodb.name;
+db.connect(function(err) {
+    if(err) { throw err; }
+});
 
-/**
- * Database Initialisation
- */
-const InitiateMongoServer = async () => {
-    try{
-        await mongoose.connect(mongo_uri, {
-            auth: {
-                user: config.mongodb.user,
-                password: config.mongodb.password
-            },
-            authSource:"admin",
-            useUnifiedTopology: true,
-            useNewUrlParser: true
-        });
-    } catch (e){
-        throw e;
-    }
+exports.findAll = (table, result) => {
+    db.query("SELECT * FROM " + table, (err, res) => {
+        if(err){
+            result(err, null);
+        }else{
+            result(null, res);
+        }
+        
+    })
 }
 
-module.exports = InitiateMongoServer;
+exports.find = (table, data, result) => {
+    db.query("SELECT * FROM " + table + " WHERE ?", [data], (err, res) => {
+        try{
+            if(err){
+                result(err, null);
+            }else{
+                result(null, res);
+            }
+        } catch (e) {
+
+        }
+    })
+}
