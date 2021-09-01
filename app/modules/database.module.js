@@ -11,6 +11,17 @@ db.connect(function(err) {
     if(err) { throw err; }
 });
 
+exports.create = (table ,data, result) => {
+    db.query("INSERT INTO " + table + " SET ?", [data], (err, res) => {
+        if(err){
+            console.log(err);
+            result(err, null);
+        }else{
+            result(null, res);
+        }
+    });
+}
+
 exports.findAll = (table, result) => {
     db.query("SELECT * FROM " + table, (err, res) => {
         if(err){
@@ -18,8 +29,7 @@ exports.findAll = (table, result) => {
         }else{
             result(null, res);
         }
-        
-    })
+    });
 }
 
 exports.find = (table, data, result) => {
@@ -33,5 +43,5 @@ exports.find = (table, data, result) => {
         } catch (e) {
 
         }
-    })
+    });
 }
