@@ -18,12 +18,15 @@ User.prototype.save = function save() {
  * @param {JSON} data 
  * @param {Array:User} callback 
  */
-User.find = (data, callback) => {
-    db.find(table_name, data, (err, res) => {
-        if(err){
-            callback(err, null);
-        }
-        callback(null, res);
+User.find = function() {
+    return new Promise(function(resolve, reject){
+        db.findAll(table_name, (err, res) => {
+            if(err){
+                reject(err);
+            } else {
+                resolve(res[0]);
+            }
+        });
     });
 }
 
@@ -32,13 +35,16 @@ User.find = (data, callback) => {
  * @param {Callback} callback
  * @return {Array:User}
  */
-User.findAll = (callback) => {
-    db.findAll(table_name, (err, res) => {
-        if(err){
-            callback(err, null);
-        }
-        callback(null, res);
-    })
+User.findAll = function() {
+    return new Promise(function(resolve, reject){
+        db.findAll(table_name, (err, res) => {
+            if(err){
+                reject(err);
+            } else {
+                resolve(res);
+            }
+        });
+    });
 }
 
 module.exports = User;
