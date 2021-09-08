@@ -1,7 +1,7 @@
 const db = require('../modules/database.module');
-const table_name = 'studies';
+const table_name = 'experiences';
 
-class Study {
+class Experience {
     constructor(data){
         for (var key in data) {
             this[key] = data[key];
@@ -9,53 +9,41 @@ class Study {
     }
 }
 
-Study.test = function(){
-    return new Promise(function(resolve, reject){
-        db.test(table_name, (err, res) => {
-            resolve(res);
-        })
-    });
-}
-
 /**
- * Return all studies
+ * Return all experiences
  * @param {Function} callback 
  */
-Study.findAll = function() {
-    return new Promise(function(resolve, reject){
-        db.findAll(table_name, (err, res) => {
-            if(err){
-                reject(err);
-            } else {
-                resolve(res);
-            }
-        });
+Experience.findAll = (callback) => {
+    db.findAll(table_name, (err, res) => {
+        if(err){
+            callback(err, null);
+        } else {
+            callback(null, res);
+        }
     })
 }
 
 /**
- * Return studies related to search
+ * Return experiences related to search
  * @param {JSON} data 
  * @param {Function} callback 
  */
-Study.find = function(data) {
-    return new Promise(function(resolve, reject){
-        db.find(table_name, data, (err, res) => {
-            if(err){
-                reject(err);
-            } else {
-                resolve(res);
-            }
-        });
+Experience.find = (data, callback) => {
+    db.find(table_name, data, (err, res) => {
+        if(err){
+            callback(err, null);
+        } else {
+            callback(null, res);
+        }
     })
 }
 
 /**
- * Return a single study related to search
+ * Return a single experience related to search
  * @param {JSON} data 
  * @param {Function} callback 
  */
-Study.findOne = (data, callback) => {
+Experience.findOne = (data, callback) => {
     db.find(table_name, data, (err, res) => {
         if(res.length > 0){
             callback(null, new Study(res[0]));
@@ -66,11 +54,11 @@ Study.findOne = (data, callback) => {
 }
 
 /**
- * Create a study
+ * Create an experience
  * @param {JSON} data 
  * @param {Function} callback 
  */
-Study.create = (data, callback) => {
+Experience.create = (data, callback) => {
     db.create(table_name, data, (err, res) => {
         if(err){
             callback(err, null);
@@ -81,11 +69,11 @@ Study.create = (data, callback) => {
 }
 
 /**
- * Update a study
+ * Update an experience
  * @param {JSON} data 
  * @param {Function} callback 
  */
-Study.update = (data, callback) => {
+Experience.update = (data, callback) => {
     db.update(table_name, data, (err, res) => {
         if(err){
             callback(err, null);
@@ -95,4 +83,4 @@ Study.update = (data, callback) => {
     });
 }
 
-module.exports = Study;
+module.exports = Experience;

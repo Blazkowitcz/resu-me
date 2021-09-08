@@ -1,13 +1,18 @@
-const Study = require('../models/study.model');
+const Experience = require('../models/experience.model');
 
-exports.findAll = async (req, res) => {
-    var toto = await Study.test();
-    res.status(200).json(toto);
+exports.findAll = (req, res) => {
+    try{
+        Experience.findAll((err, result) => {
+            res.status(200).json(result);
+        })
+    } catch(e) {
+        throw e;
+    }
 }
 
 exports.find = (req, res) => {
     try{
-        Study.find(req.body, (err, result) => {
+        Experience.find(req.body, (err, result) => {
             res.status(200).json(result);
         })
     } catch (e) {
@@ -17,7 +22,7 @@ exports.find = (req, res) => {
 
 exports.findOne = (req, res) => {
     try{
-        Study.findOne(req.body, (err, result) => {
+        Experience.findOne(req.body, (err, result) => {
             res.status(200).json(result);
         })
     } catch (e) {
@@ -27,7 +32,7 @@ exports.findOne = (req, res) => {
 
 exports.create = (req, res) => {
     try{
-        Study.create(req.body, (err, result) => {
+        Experience.create(req.body, (err, result) => {
             res.status(200).json(result);
         });
     } catch(e) {
@@ -37,7 +42,7 @@ exports.create = (req, res) => {
 
 exports.update = (req, res) => {
     try{
-        Study.update(req.body, (err, result) => {
+        Experience.update(req.body, (err, result) => {
             res.status(200).json(result);
         })
     } catch (e) {
